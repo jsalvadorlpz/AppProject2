@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.entrega3.Fragments.MainFragment;
 import com.example.entrega3.R;
 import com.example.entrega3.model.ItemList;
 
@@ -19,6 +21,10 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements View.OnClickListener{
     private List<ItemList> items;
     LayoutInflater inflater;
+    Fragment fragment;
+    public String url_imagenes = "https://image.tmdb.org/t/p/w500";
+    //para las imagenes, como el poster_path solo nos da un trozo del link que necesiamtos, tenemos que tener la primera
+    //parte que es generica a todos
 
     //listener
     private View.OnClickListener  listener;
@@ -30,6 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public RecyclerAdapter(Context context, List<ItemList> items){
         this.inflater = LayoutInflater.from(context);
+
         this.items = items;
     }
 
@@ -56,19 +63,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //Llama a este método para asociar una ViewHolder con los datos.
         // El método recupera los datos correspondientes y los usa
         // para completar el diseño del contenedor de vistas.
+
         String Titulo = items.get(position).getTitulo();
         String Release = items.get(position).getRelease();
         String Genrer = items.get(position).getGenrer();
         //Glide.with(getContext()).load(poster_paths.get(j)).into();
+        View view = inflater.inflate(R.layout.item_list_view,null,false);
+        Glide.with(view).load(url_imagenes+items.get(position).getPosterPath()).into(holder.image);
         holder.Titulo.setText(Titulo);
         holder.Release.setText(Release);
         holder.Genrer.setText(Genrer);
+
         //ItemList item = items.get(position);
         //holder.imgItem.setImageResource(item.getImgResource());
        // holder.Titulo.setText(item.getTitulo());
         //holder.Release.setText(item.getRelease());
         //holder.Genrer.setText(item.getGenrer());
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -81,6 +94,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         private TextView Titulo;
         private TextView Release;
         private TextView Genrer;
+        private ImageView image;
        // private ImageView poster;
 
         public ViewHolder(@NonNull View itemView){
@@ -88,6 +102,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Titulo = itemView.findViewById(R.id.Titulo);
             Release = itemView.findViewById(R.id.Release);
             Genrer = itemView.findViewById(R.id.Genrer);
+            image = itemView.findViewById(R.id.imgItem);
            // poster = itemView.findViewById(R.id.imgItem);
         }
 
