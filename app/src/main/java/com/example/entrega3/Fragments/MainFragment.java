@@ -40,13 +40,19 @@ public class MainFragment extends Fragment {
     Activity actividad;
     iComunicaFragments interfaceComunicateFragmets;
 
+
+    //para las imagenes, como el poster_path solo nos da un trozo del link que necesiamtos, tenemos que tener la primera
+    //parte que es generica a todos
+    public String url_imagenes = "https://image.tmdb.org/t/p/w500";
+
     public static String BASE_URL = "https://api.themoviedb.org";
     public static int PAGE = 1;
     public String API_KEY = "65b0f0c1dca6b0957d34d1fceaf3107a";
     public static String  LANGUAGE = "en-US";
     public static String CATEGORY="popular";
+    public int id;
     public String titulo,release,poster_path,sinopsis,language;
-    public List<String> titulos, releases,generos3,sinopsisList,languages;
+    public List<String> titulos, releases,generos3,sinopsisList,languages, poster_paths;
     public List<Integer> generos;
     public List<List<Integer>> generos2;
     public int cantidad2,j,i  = 0;
@@ -66,7 +72,7 @@ public class MainFragment extends Fragment {
         generos3 = new ArrayList<String>();
         sinopsisList = new ArrayList<>();
         languages = new ArrayList<>();
-        //poster_paths = new ArrayList<String>();
+        poster_paths = new ArrayList<String>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -91,14 +97,14 @@ public class MainFragment extends Fragment {
                     generos = (List<Integer>) Movie.getGenre_ids();
                     sinopsis = (String) Movie.getOverview();
                     language= (String)Movie.getOriginal_language();
-                    //poster_path= (String) Movie.getPoster_path();
+                    poster_path= (String) Movie.getPoster_path();
                     //Log.e("",Movie.getOriginal_title());
                     titulos.add(titulo);
                     releases.add(release);
                     generos2.add(generos);
                     sinopsisList.add(sinopsis);
                     languages.add(language);
-                   // poster_paths.add(poster_path);
+                   poster_paths.add(poster_path);
                     i = i + 1;
                 }
                 i = 0;
@@ -139,7 +145,7 @@ public class MainFragment extends Fragment {
         List<ItemList> itemLists = new ArrayList<>();
         while(j<cantidad2) {
 
-            itemLists.add(new ItemList(titulos.get(j), releases.get(j),generos3.get(j),sinopsisList.get(j),languages.get(j)));
+            itemLists.add(new ItemList(titulos.get(j), releases.get(j),generos3.get(j),sinopsisList.get(j),languages.get(j),poster_paths.get(j)));
             j+=1;
         }
 

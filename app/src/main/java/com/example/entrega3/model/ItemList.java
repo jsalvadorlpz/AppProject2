@@ -9,10 +9,10 @@ public class ItemList implements Serializable {
     private String poster_path,sinopsis,language;
     //private int imgResource;
 
-    public ItemList(String titulo,String release,String genrer,String sinopsis,String language){
+    public ItemList(String titulo,String release,String genrer,String sinopsis,String language,String poster_path){
         this.titulo = titulo;
         this.release = release;
-        //this.poster_path = poster_path;
+        this.poster_path = poster_path;
         //this.imgResource = imgResource;
         this.genrer = genrer;
         this.sinopsis = sinopsis;
