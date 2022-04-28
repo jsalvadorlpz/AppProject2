@@ -55,6 +55,8 @@ public class MainFragment extends Fragment {
     public List<String> titulos, releases,generos3,sinopsisList,languages, poster_paths;
     public List<Integer> generos;
     public List<List<Integer>> generos2;
+    public double popularity;
+    public List<Double> popolularitys;
     public int cantidad2,j,i  = 0;
     @Nullable
     @Override
@@ -73,6 +75,7 @@ public class MainFragment extends Fragment {
         sinopsisList = new ArrayList<>();
         languages = new ArrayList<>();
         poster_paths = new ArrayList<String>();
+        popolularitys = new ArrayList<Double>();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -98,6 +101,7 @@ public class MainFragment extends Fragment {
                     sinopsis = (String) Movie.getOverview();
                     language= (String)Movie.getOriginal_language();
                     poster_path= (String) Movie.getPoster_path();
+                    popularity = (Double) Movie.getPopularity();
                     //Log.e("",Movie.getOriginal_title());
                     titulos.add(titulo);
                     releases.add(release);
@@ -105,6 +109,8 @@ public class MainFragment extends Fragment {
                     sinopsisList.add(sinopsis);
                     languages.add(language);
                    poster_paths.add(poster_path);
+                   popolularitys.add(popularity);
+
                     i = i + 1;
                 }
                 i = 0;
@@ -145,7 +151,7 @@ public class MainFragment extends Fragment {
         List<ItemList> itemLists = new ArrayList<>();
         while(j<cantidad2) {
 
-            itemLists.add(new ItemList(titulos.get(j), releases.get(j),generos3.get(j),sinopsisList.get(j),languages.get(j),poster_paths.get(j)));
+            itemLists.add(new ItemList(titulos.get(j), releases.get(j),generos3.get(j),sinopsisList.get(j),languages.get(j),poster_paths.get(j),popolularitys.get(j)));
             j+=1;
         }
 

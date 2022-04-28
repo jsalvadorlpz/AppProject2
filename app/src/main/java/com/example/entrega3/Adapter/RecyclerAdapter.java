@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -67,12 +68,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String Titulo = items.get(position).getTitulo();
         String Release = items.get(position).getRelease();
         String Genrer = items.get(position).getGenrer();
+        Double pop = items.get(position).getPopularity();
         //Glide.with(getContext()).load(poster_paths.get(j)).into();
         View view = inflater.inflate(R.layout.item_list_view,null,false);
         Glide.with(view).load(url_imagenes+items.get(position).getPosterPath()).into(holder.image);
         holder.Titulo.setText(Titulo);
         holder.Release.setText(Release);
         holder.Genrer.setText(Genrer);
+        holder.popu.setProgress((int) Math.round((pop/100)));
+        holder.prog.setText(String.valueOf(Math.round((pop/1000)*100.0)/100.0));
 
         //ItemList item = items.get(position);
         //holder.imgItem.setImageResource(item.getImgResource());
@@ -91,10 +95,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Titulo;
-        private TextView Release;
-        private TextView Genrer;
+        private TextView Titulo,Genrer,Release,prog;
         private ImageView image;
+        private ProgressBar popu;
        // private ImageView poster;
 
         public ViewHolder(@NonNull View itemView){
@@ -102,7 +105,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             Titulo = itemView.findViewById(R.id.Titulo);
             Release = itemView.findViewById(R.id.Release);
             Genrer = itemView.findViewById(R.id.Genrer);
+            popu = itemView.findViewById(R.id.progress_bar);
             image = itemView.findViewById(R.id.imgItem);
+            prog = itemView.findViewById(R.id.text_view_progress);
            // poster = itemView.findViewById(R.id.imgItem);
         }
 
@@ -112,23 +117,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public int getItemCount() {
         return items.size();
     }
-    //RecyclerView llama a este método a fin de obtener el tamaño
-    // del conjunto de datos
 
-    public static class RecyclerHolder extends RecyclerView.ViewHolder{
-        //private ImageView imgItem;
-        private TextView Titulo;
-        private TextView Release;
-        private TextView Genrer;
-
-        public RecyclerHolder(@NonNull View itemView){
-            super(itemView);
-            //imgItem = itemView.findViewById(R.id.imgItem);
-            Titulo = itemView.findViewById(R.id.Titulo);
-            Release = itemView.findViewById(R.id.Release);
-            Genrer = itemView.findViewById(R.id.Genrer);
-        }
-
-
-    }
 }
